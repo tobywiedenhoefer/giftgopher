@@ -1,4 +1,17 @@
 {% extends "layout.html" %}
+{% block addcss %}
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='styles/buttonblock.css')}}">
+{% endblock %}
 {% block bodycontent %}
     <p>Splash page</p>
+    <div>
+        <button>
+            <a href="{{url_for('signup')}}">Sign Up</a>
+        </button>
+    </div>
+    <div>
+        <button>
+            <a href="{{url_for('login')}}">Log In</a>
+        </button>
+    </div>
 {% endblock %}
