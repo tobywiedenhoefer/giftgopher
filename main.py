@@ -6,13 +6,16 @@ from flask import render_template
 # custom methods and classes
 from models import *
 
+# Global Variables
+WEBSITE_NAME = "Gift Gopher"
+
 
 @app.route('/')
 def splash():
     """
     Splash page for user.
     """
-    return render_template('splash.html', title="Gift Gopher")
+    return render_template('splash.html', title=WEBSITE_NAME)
 
 
 @app.route('/login')
