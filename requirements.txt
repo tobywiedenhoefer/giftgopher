@@ -1,1 +1,6 @@
 flask
+SQLAlchemy
+Flask-SQLAlchemy
+Flask-Login
+Flask-WTF
+WTForms

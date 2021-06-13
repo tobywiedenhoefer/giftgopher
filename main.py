@@ -1,9 +1,10 @@
 # base packages
 
 # PyPi packages
-from flask import Flask, render_template
+from flask import render_template
 
-app = Flask(__name__)
+# custom methods and classes
+from models import *
 
 
 @app.route('/')
