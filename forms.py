@@ -19,7 +19,7 @@ class RegistrationForm(FlaskForm):
         DataRequired(),
         Length(min=3, max=15)
     ])
-    password = PasswordField('Username', validators=[
+    password = PasswordField('Password', validators=[
         DataRequired(),
         Length(min=8, max=60)
     ])
