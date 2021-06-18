@@ -5,6 +5,7 @@ from datetime import datetime
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
+from flask_bcrypt import Bcrypt
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'SECRET_KEY'
@@ -13,6 +14,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 app.config['WTF_CSRF_ENABLED'] = False
 
 db = SQLAlchemy(app)
+bcrypt = Bcrypt(app)
 
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
@@ -34,6 +36,9 @@ class User(db.Model):
 
     gifts = db.relationship('Gifts', backref='user')
 
+    def __repr__(self):
+        return f'User {self.username} ({self.email})'
+
 
 class Gifts(db.Model):
     __tablename__ = "gifts"
@@ -50,7 +55,7 @@ class Gifts(db.Model):
     holiday = db.relationship('Holidays', backref='gifts')
 
     def __repr__(self):
-        return f"Gift: {self.name}"
+        return f"Gift ({self.nam}) added by {self.user_id}"
 
 
 class Connections(db.Model):

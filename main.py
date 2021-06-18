@@ -1,10 +1,10 @@
 # base packages
 
 # PyPi packages
-from flask import render_template, redirect, url_for
+from flask import render_template, redirect, url_for, flash
 from flask_login import current_user
 
-# custom methods and classes
+# custom packages
 from models import *
 from forms import *
 
@@ -35,10 +35,13 @@ def signup():
 
     if form.validate_on_submit():
 
-        print(
-            form.username.data,
-            form.email.data
-        )
+        hashed_pass = bcrypt.generate_password_hash(password=form.password.data).decode('utf-0')
+        user = User(username=form.username.data, password=hashed_pass, email=form.email.data)
+
+        db.session.add(user)
+        db.session.commit()
+
+        flash('Account created! Please sign in.')
 
         return redirect(url_for('login'))
 
