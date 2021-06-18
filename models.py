@@ -33,7 +33,6 @@ class User(db.Model):
     password = db.Column(db.String(60), nullable=False)
 
     gifts = db.relationship('Gifts', backref='user')
-    connections = db.relationship('Connections', backref='user')
 
 
 class Gifts(db.Model):
@@ -62,6 +61,11 @@ class Connections(db.Model):
     follower_name = db.Column(db.String(15), db.ForeignKey('user.username'), nullable=False)
     following_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     following_name = db.Column(db.String(15), db.ForeignKey('user.username'), nullable=False)
+
+    follower_user_id = db.relationship('User', foreign_keys=[follower_id])
+    follower_user_name = db.relationship('User', foreign_keys=[follower_name])
+    following_user_id = db.relationship('User', foreign_keys=[following_id])
+    following_user_name = db.relationship('User', foreign_keys=[following_name])
 
 
 class Holidays(db.Model):

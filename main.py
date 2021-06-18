@@ -25,7 +25,6 @@ def login():
     return "login page."
 
 
-# TODO: solve AmbiguousForeignKeysError -- db related
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
 
