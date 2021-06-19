@@ -4,7 +4,7 @@ from datetime import datetime
 # PyPi packages
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from flask_login import LoginManager
+from flask_login import LoginManager, UserMixin
 from flask_bcrypt import Bcrypt
 
 app = Flask(__name__)
@@ -26,7 +26,7 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 
 
-class User(db.Model):
+class User(db.Model, UserMixin):
     __tablename__ = "user"
 
     id = db.Column(db.Integer, primary_key=True)
