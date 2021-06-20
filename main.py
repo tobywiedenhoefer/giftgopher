@@ -2,7 +2,7 @@
 
 # PyPi packages
 from flask import render_template, redirect, url_for, flash, request
-from flask_login import current_user, login_user
+from flask_login import current_user, login_user, logout_user
 from sqlalchemy.exc import NoResultFound
 
 # custom packages
@@ -94,7 +94,16 @@ def signup():
     return render_template('signup.html', title='Sign Up', form=form)
 
 
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('splash'))
+
+
 if __name__ == "__main__":
-    app.run(
+    '''app.run(
         debug=True
-    )
+    )'''
+    users = User.query.all()
+    for user in users:
+        print(user.id, user.username, user.email)

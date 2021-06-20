@@ -84,5 +84,5 @@ class Holidays(db.Model):
     # TODO: create relationship with Gifts?
 
 
-db.drop_all()
+# db.drop_all()
 db.create_all()
