@@ -36,7 +36,6 @@ def trylogin(form: LoginForm) -> str:
     login_user(user=user, remember=form.remember.data)
 
     next_path = request.args.get('next')  # /login?next=next_path
-    print(next_path)
 
     if next_path:
         if next_path[0] == "/":
@@ -101,9 +100,6 @@ def logout():
 
 
 if __name__ == "__main__":
-    '''app.run(
+    app.run(
         debug=True
-    )'''
-    users = User.query.all()
-    for user in users:
-        print(user.id, user.username, user.email)
+    )

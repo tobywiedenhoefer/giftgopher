@@ -90,7 +90,21 @@ class UpdateAccountForm(FlaskForm):
             if proposed_email:
                 raise ValueError('This email already has an account. Maybe you would like to sign in instead?')
 
-# TODO: create GiftForm
+
+class CreateGiftForm(FlaskForm):
+    name = StringField('Name', validators=[
+        DataRequired(),
+        Length(min=1, max=100)
+    ])
+    link = StringField('Link', validators=[
+        Length(max=100)
+    ])
+    description = StringField('Description', validators=[
+        Length(max=140)
+    ])
+    public = BooleanField('Make Gift Public')
+    # TODO: add ability to link holiday
+
 # TODO: create UpdateGiftForm
 # TODO: create HolidayForm
 # TODO: create UpdateHolidayForm
