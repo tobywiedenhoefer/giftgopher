@@ -44,12 +44,16 @@
 
                     <!-- if user is logged in/authenticated -->
                     {% else %}
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="{{url_for('login')}}">Log In</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="{{url_for('signup')}}">Sign Up</a>
-                        </li>
+                        {% if title != 'Log In' %}
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="{{url_for('login')}}">Log In</a>
+                            </li>
+                        {% endif %}
+                        {% if title != 'Sign Up' %}
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="{{url_for('signup')}}">Sign Up</a>
+                            </li>
+                        {% endif %}
                     {% endif %}
                 </ul>
             </div>

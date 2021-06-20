@@ -1,74 +1,74 @@
 {% extends "layout.html" %}
 {% block bodycontent %}
-<div>
+<div class="container">
     <form method="POST">
         {{ form.hidden_tag() }}
 
         <fieldset>
-            <legend>Sign Up</legend>
+            <legend class="col-form-label-lg mx-auto">Sign Up</legend>
 
-            <div>
-                {{ form.username.label() }}
+            <div class="mb-3">
+                {{ form.username.label(class='form-label') }}
 
                 {% if form.username.errors %}
-                    {{ form.username() }}
+                    {{ form.username(class='form-control') }}
                     <div>
                         {% for error in form.username.errors %}
                             <span>{{error}}</span>
                         {% endfor %}
                     </div>
                 {% else %}
-                    {{ form.username()}}
+                    {{ form.username(class='form-control')}}
                 {% endif %}
             </div>
-            <div>
-                {{ form.email.label() }}
+            <div class="mb-3">
+                {{ form.email.label(class='form-label') }}
                 {% if form.email.errors %}
-                    {{ form.email() }}
+                    {{ form.email(class='form-control') }}
                 <div>
                     {% for error in form.email.errors %}
                         <span>{{error}}</span>
                     {% endfor %}
                 </div>
                 {% else %}
-                    {{ form.email() }}
+                    {{ form.email(class='form-control') }}
                 {% endif %}
             </div>
-            <div>
-                {{ form.password.label() }}
+            <div class="mb-3">
+                {{ form.password.label(class='form-label') }}
                 {% if form.password.errors %}
-                    {{ form.password() }}
+                    {{ form.password(class='form-control') }}
                     <div>
                         {% for error in form.password.errors %}
                             <span>{{error}}</span>
                         {% endfor %}
                     </div>
                 {% else %}
-                    {{ form.password() }}
+                    {{ form.password(class='form-control') }}
                 {% endif %}
             </div>
-            <div>
-                {{ form.confirm_password.label() }}
+            <div class="mb-3">
+                {{ form.confirm_password.label(class='form-label') }}
                 {% if form.confirm_password.errors %}
-                    {{ form.confirm_password() }}
+                    {{ form.confirm_password(class='form-control') }}
                     <div>
                         {% for error in form.confirm_password.errors %}
                             <span>{{error}}</span>
                         {% endfor %}
                     </div>
                 {% else %}
-                    {{ form.confirm_password() }}
+                    {{ form.confirm_password(class='form-control') }}
                 {% endif %}
             </div>
         </fieldset>
-        <div>
-            {{ form.submit()}}
+        <div class="mb-3">
+            {{ form.submit(class='btn btn-primary')}}
         </div>
     </form>
-</div>
-<div>
-    <small>
-        Already have an account? <a href="{{ url_for('login') }}">Sign In</a>
-    </small>
+    <div>
+        <small class="form-check-label">
+            Already have an account? <a href="{{ url_for('login') }}">Sign In</a>
+        </small>
+    </div>
 </div>
 {% endblock bodycontent %}

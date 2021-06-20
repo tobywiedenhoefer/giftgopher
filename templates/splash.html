@@ -1,14 +1,13 @@
 {% extends "layout.html" %}
-{% block addcss %}
-    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='styles/buttonblock.css')}}">
-{% endblock %}
 {% block bodycontent %}
     <p class="fs-1 text-center">Gift Gopher</p>
     {% if current_user.is_authenticated %}
-        <div class="d-grid gap-2">
-            <a class="btn btn-light" href="#" role="button">Add Gift</a>
-            <a class="btn btn-light" href="#" role="button">Add Holiday</a>
-            <a class="btn btn-light" href="#" role="button">Add a Friend</a>
+        <div class="container">
+            <div class="d-grid gap-2 col-6 mx-auto">
+                <a class="btn btn-light" href="#" role="button">Add Gift</a>
+                <a class="btn btn-light" href="#" role="button">Add Holiday</a>
+                <a class="btn btn-light" href="#" role="button">Add a Friend</a>
+            </div>
         </div>
     {% endif %}
 {% endblock %}
