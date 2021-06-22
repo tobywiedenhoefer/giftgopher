@@ -1,0 +1,62 @@
+{% extends "layout.html" %}
+{% block bodycontent %}
+<div class="container">
+    <form method="POST">
+        {{ form.hidden_tag() }}
+
+        <fieldset>
+            <legend class="col-form-label-lg mx-auto">Add Gift</legend>
+
+            <div class="mb-3">
+                {{ form.name.label(class='form-label') }}
+
+                {% if form.name.errors %}
+                    {{ form.name(class='form-control') }}
+                    <div>
+                        {% for error in form.name.errors %}
+                            <span>{{error}}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.name(class='form-control') }}
+                {% endif %}
+            </div>
+            <div class="mb-3">
+                {{ form.link.label(class='form-label') }}
+
+                {% if form.link.errors %}
+                    {{ form.link(class='form-control') }}
+                    <div>
+                        {% for error in form.link.errors %}
+                            <span>{{error}}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.link(class='form-control') }}
+                {% endif %}
+            </div>
+            <div class="input-group mb-3">
+                {{ form.description.label(class='form-label') }}
+
+                {% if form.description.errors %}
+                    {{ form.description(class='form-control') }}
+                    <div>
+                        {% for error in form.description.errors %}
+                            <span>{{error}}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.description(class='form-control') }}
+                {% endif %}
+            </div>
+            <div>
+                {{ form.public(class="form-check-label") }}
+                {{ form.public.label(class='form-label') }}
+            </div>
+        </fieldset>
+        <div>
+            {{ form.submit(class='btn btn-primary') }}
+        </div>
+    </form>
+</div>
+{% endblock bodycontent %}
