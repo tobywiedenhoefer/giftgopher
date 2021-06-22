@@ -103,6 +103,7 @@ class CreateGiftForm(FlaskForm):
         Length(max=140)
     ])
     public = BooleanField('Make Gift Public')
+    submit = SubmitField('Add')
     # TODO: add ability to link holiday
 
 # TODO: create UpdateGiftForm

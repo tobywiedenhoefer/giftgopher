@@ -2,16 +2,18 @@
 
 # PyPi packages
 from flask import render_template, redirect, url_for, flash, request
-from flask_login import current_user, login_user, logout_user
+from flask_login import current_user, login_user, logout_user, login_required
 from sqlalchemy.exc import NoResultFound
 
 # custom packages
-from models import *
-from forms import *
+from models import User, Gifts
+from forms import RegistrationForm, LoginForm, CreateGiftForm
 from custom_exceptions import IncorrectPassword
 
 # Global Variables
 WEBSITE_NAME = "Gift Gopher"
+
+# TODO: add activity feed; whenever someone adds a gift, connection, wishlist,
 
 
 def trylogin(form: LoginForm) -> str:
@@ -44,11 +46,32 @@ def trylogin(form: LoginForm) -> str:
     return 'splash'
 
 
+def _gifts_add(form: CreateGiftForm):
+    """
+    Helper method to add gifts
+    :param form: CreateGiftForm
+    """
+    gift = Gifts(
+        user_id=current_user.id,
+        name=form.name.data,
+        description=form.description.data,
+        link=form.link.data,
+        public=form.public.data
+    )
+    db.session.add(gift)
+    db.session.commit()
+
+    flash('Gift created!', 'success')
+
+
 @app.route('/')
 def splash():
     """
     Splash page for user.
     """
+    # TODO: add feed to root
+    # TODO: once authenticated, change navbar to have pictures/buttons for 'gifts -> add/vew mine/search'
+    #  'people -> view/search'
     return render_template('splash.html', title=WEBSITE_NAME)
 
 
@@ -97,6 +120,31 @@ def signup():
 def logout():
     logout_user()
     return redirect(url_for('splash'))
+
+
+@app.route('/gifts/add', methods=['GET', 'POST'])
+@login_required
+def gifts_add():
+
+    form = CreateGiftForm()
+
+    if form.validate_on_submit():
+
+        _gifts_add(form)
+
+        return redirect(url_for('gifts_add'))
+
+    return render_template('gifts_add.html', title='Add Gift', form=form)
+
+
+@app.route('/gifts/view', methods=['GET', 'POST', 'DELETE'])
+@login_required
+def gifts_view():
+    ...
+
+
+# TODO: gifts/view?gift_id=<gift_id>    views
+# TODO: gifts/view?update=<gift_id>&update=True     update view loads if author of gift
 
 
 if __name__ == "__main__":

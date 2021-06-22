@@ -4,9 +4,8 @@
     {% if current_user.is_authenticated %}
         <div class="container">
             <div class="d-grid gap-2 col-6 mx-auto">
-                <a class="btn btn-light" href="#" role="button">Add Gift</a>
-                <a class="btn btn-light" href="#" role="button">Add Holiday</a>
-                <a class="btn btn-light" href="#" role="button">Add a Friend</a>
+                <a class="btn btn-light" href="{{url_for('gifts_add')}}" role="button">Add Gift</a>
+                <a class="btn btn-light" href="#" role="button">My Wishlist</a>
             </div>
         </div>
     {% endif %}

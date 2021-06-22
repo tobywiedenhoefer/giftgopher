@@ -55,7 +55,7 @@ class Gifts(db.Model):
     holiday = db.relationship('Holidays', backref='gifts')
 
     def __repr__(self):
-        return f"Gift ({self.nam}) added by {self.user_id}"
+        return f"Gift ({self.name}) added by {self.user_id}"
 
 
 class Connections(db.Model):
