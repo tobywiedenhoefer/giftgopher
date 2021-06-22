@@ -6,7 +6,7 @@ from flask_login import current_user, login_user, logout_user, login_required
 from sqlalchemy.exc import NoResultFound
 
 # custom packages
-from models import User, Gifts
+from models import User, Gifts, app, db, bcrypt, login_manager
 from forms import RegistrationForm, LoginForm, CreateGiftForm
 from custom_exceptions import IncorrectPassword
 
