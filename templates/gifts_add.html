@@ -5,48 +5,48 @@
         {{ form.hidden_tag() }}
 
         <fieldset>
-            <legend class="col-form-label-lg mx-auto">Add Gift</legend>
+            <legend class="col-form-label-lg mx-auto">Add a Gift</legend>
 
             <div class="mb-3">
                 {{ form.name.label(class='form-label') }}
 
                 {% if form.name.errors %}
-                    {{ form.name(class='form-control') }}
+                    {{ form.name(class='form-control', placeholder='Required.') }}
                     <div>
                         {% for error in form.name.errors %}
                             <span>{{error}}</span>
                         {% endfor %}
                     </div>
                 {% else %}
-                    {{ form.name(class='form-control') }}
+                    {{ form.name(class='form-control', placeholder='Required.') }}
                 {% endif %}
             </div>
             <div class="mb-3">
                 {{ form.link.label(class='form-label') }}
 
                 {% if form.link.errors %}
-                    {{ form.link(class='form-control') }}
+                    {{ form.link(class='form-control', placeholder='Optional.') }}
                     <div>
                         {% for error in form.link.errors %}
                             <span>{{error}}</span>
                         {% endfor %}
                     </div>
                 {% else %}
-                    {{ form.link(class='form-control') }}
+                    {{ form.link(class='form-control', placeholder='Optional.') }}
                 {% endif %}
             </div>
             <div class="input-group mb-3">
-                {{ form.description.label(class='form-label') }}
+                {{ form.description.label(class='input-group-text') }}
 
                 {% if form.description.errors %}
-                    {{ form.description(class='form-control') }}
+                    {{ form.description(class='form-control', placeholder='Optional.') }}
                     <div>
                         {% for error in form.description.errors %}
                             <span>{{error}}</span>
                         {% endfor %}
                     </div>
                 {% else %}
-                    {{ form.description(class='form-control') }}
+                    {{ form.description(class='form-control', placeholder='Optional.') }}
                 {% endif %}
             </div>
             <div>

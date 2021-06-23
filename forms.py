@@ -4,7 +4,7 @@
 from flask_wtf import FlaskForm
 from flask_login import current_user
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField  # needed?
-from wtforms.validators import DataRequired, Length, Email, Regexp, EqualTo, ValidationError
+from wtforms.validators import DataRequired, Length, Email, Regexp, EqualTo, URL, ValidationError
 
 # custom methods and classes
 from models import User
@@ -97,7 +97,8 @@ class CreateGiftForm(FlaskForm):
         Length(min=1, max=100)
     ])
     link = StringField('Link', validators=[
-        Length(max=100)
+        Length(max=100),
+        URL(message="Please enter a valid URL.")
     ])
     description = StringField('Description', validators=[
         Length(max=140)

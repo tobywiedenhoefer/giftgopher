@@ -1,0 +1,37 @@
+{% extends 'layout.html' %}
+{% block bodycontent %}
+<div id="profileContainer" class="container text-center">
+    <br>
+    <h1 id="userName" class="display-4">{{profile_user}}</h1>
+    <p>{{profile_user}}'s bio/description</p>
+    <br>
+</div>
+<div class="container">
+    {% if gifts|length > 0 %}
+    <h5 class="text-center card-title">Gifts</h5>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for gift in gifts %}
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="card shadow-sm mx-auto" style="width: 18rem;">
+                <div class="card-body">
+                    {% if gift.link|length > 0 %}
+                    <!-- TODO: if no picture, get the thumbnail from diff websites -->
+                    <h5 class="card-title"><a href="{{gift.link}}">{{gift.name}}</a> </h5>
+                    {% else %}
+                    <h5 class="card-title">{{gift.name}}</h5>
+                    {% endif %}
+                    <p class="card-text text-truncate" style="overflow:hidden;text-overflow:ellipsis;">{{gift.description}}</p>
+                    {% if owner %}
+                        <a href="#" class="btn btn-primary text-start">Delete</a>
+                        <a href="#" class="btn btn-primary text-end">Edit</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+        <h5 class="text-center">Hmmm, we couldn't find any gifts. Maybe try refreshing the page or <a href="{{url_for('gifts_add')}}">add a gift</a>?</h5>
+    {% endif %}
+</div>
+{% endblock bodycontent%}

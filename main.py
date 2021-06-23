@@ -122,9 +122,9 @@ def logout():
     return redirect(url_for('splash'))
 
 
-@app.route('/gifts/add', methods=['GET', 'POST'])
+@app.route('/user/<username>/gifts/add', methods=['GET', 'POST'])
 @login_required
-def gifts_add():
+def gifts_add(username):
 
     form = CreateGiftForm()
 
@@ -137,12 +137,28 @@ def gifts_add():
     return render_template('gifts_add.html', title='Add Gift', form=form)
 
 
-@app.route('/gifts/view', methods=['GET', 'POST', 'DELETE'])
+@app.route('/user/<username>', methods=['GET', 'POST', 'DELETE'])
 @login_required
-def gifts_view():
-    ...
+def profile(username):
 
+    page_user = db.session.query(User).filter_by(username=username).first()
 
+    if not page_user:  # username is not an active username
+        return "Throw 404", 404
+    elif page_user.id == current_user.id:  # current user is viewing their own page
+        gifts = db.session.query(Gifts).filter_by(user_id=current_user.id).all()
+        is_owner = True
+    else:  # someone else is viewing username's page
+        gifts = db.session.query(Gifts).filter_by(user_id=page_user.id, public=True).all()
+        is_owner = False
+
+    return render_template(
+        'profile.html',
+        gifts=gifts,
+        title=current_user.username,
+        profile_user=username,
+        owner=is_owner
+    )
 # TODO: gifts/view?gift_id=<gift_id>    views
 # TODO: gifts/view?update=<gift_id>&update=True     update view loads if author of gift
 
