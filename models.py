@@ -81,8 +81,6 @@ class Holidays(db.Model):
     holiday = db.Column(db.String(50), nullable=False)
     date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
-    # TODO: create relationship with Gifts?
-
 
 # db.drop_all()
 db.create_all()

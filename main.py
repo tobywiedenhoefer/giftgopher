@@ -13,8 +13,6 @@ from custom_exceptions import IncorrectPassword
 # Global Variables
 WEBSITE_NAME = "Gift Gopher"
 
-# TODO: add activity feed; whenever someone adds a gift, connection, wishlist,
-
 
 def trylogin(form: LoginForm) -> str:
     """
@@ -23,7 +21,6 @@ def trylogin(form: LoginForm) -> str:
     :return str for where to redirect next.
     """
 
-    # TODO: log login tries
     try:
         user = User.query.filter_by(username=form.username.data).one()  # throws NoResultFound if username not found.
         if not bcrypt.check_password_hash(user.password, form.password.data):
@@ -61,17 +58,12 @@ def _gifts_add(form: CreateGiftForm):
     db.session.add(gift)
     db.session.commit()
 
-    flash('Gift created!', 'success')
-
 
 @app.route('/')
 def splash():
     """
     Splash page for user.
     """
-    # TODO: add feed to root
-    # TODO: once authenticated, change navbar to have pictures/buttons for 'gifts -> add/vew mine/search'
-    #  'people -> view/search'
     return render_template('splash.html', title=WEBSITE_NAME)
 
 
@@ -132,7 +124,7 @@ def gifts_add(username):
 
         _gifts_add(form)
 
-        return redirect(url_for('gifts_add'))
+        return redirect(url_for('gifts_add', username=current_user.username))
 
     return render_template('gifts_add.html', title='Add Gift', form=form)
 
@@ -159,8 +151,6 @@ def profile(username):
         profile_user=username,
         owner=is_owner
     )
-# TODO: gifts/view?gift_id=<gift_id>    views
-# TODO: gifts/view?update=<gift_id>&update=True     update view loads if author of gift
 
 
 if __name__ == "__main__":
