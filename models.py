@@ -1,5 +1,6 @@
 # base packages
 from datetime import datetime
+from pprint import pprint
 
 # PyPi packages
 from flask import Flask
@@ -37,7 +38,7 @@ class User(db.Model, UserMixin):
     gifts = db.relationship('Gifts', backref='user')
 
     def __repr__(self):
-        return f'User {self.username} ({self.email})'
+        return f'{self.username} ({self.email})'
 
 
 class Gifts(db.Model):
@@ -55,7 +56,7 @@ class Gifts(db.Model):
     holiday = db.relationship('Holidays', backref='gifts')
 
     def __repr__(self):
-        return f"Gift ({self.name}) added by {self.user_id}"
+        return f'{self.user_id}\'s gift {self.name} ({self.public})'
 
 
 class Connections(db.Model):
@@ -72,6 +73,9 @@ class Connections(db.Model):
     following_user_id = db.relationship('User', foreign_keys=[following_id])
     following_user_name = db.relationship('User', foreign_keys=[following_name])
 
+    def __repr__(self):
+        return f'{self.follower_name} is following {self.following_name}.'
+
 
 class Holidays(db.Model):
     __tablename__ = 'holidays'
@@ -84,3 +88,7 @@ class Holidays(db.Model):
 
 # db.drop_all()
 db.create_all()
+
+if __name__ == "__main__":
+    pprint(db.session.query(User).all())
+    pprint(db.session.query(Gifts).all())

@@ -96,9 +96,8 @@ class CreateGiftForm(FlaskForm):
         DataRequired(),
         Length(min=1, max=100)
     ])
-    link = StringField('Link', validators=[
-        Length(max=100),
-        URL(message="Please enter a valid URL.")
+    link = StringField('Link/Suggested Site', validators=[
+        Length(max=100)
     ])
     description = StringField('Description', validators=[
         Length(max=140)
