@@ -104,3 +104,9 @@ class CreateGiftForm(FlaskForm):
     ])
     public = BooleanField('Make Gift Public')
     submit = SubmitField('Add')
+
+
+class SearchForm(FlaskForm):
+    search = StringField('Search', [
+        DataRequired()
+    ])

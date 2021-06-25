@@ -62,6 +62,33 @@ def _gifts_add(form: CreateGiftForm):
     db.session.add(gift)
     db.session.commit()
 
+
+######################################################################
+#                       search functions
+######################################################################
+
+# search handler
+@app.route('/search', methods=['POST'])
+def search():
+    if not g.search_form.validate_on_submit():
+        return redirect(url_for('splash'))
+    return redirect(url_for('search_results', qry=g.search_form.search.data))
+
+@app.route('/search/<qry>', methods=['POST', 'GET'])
+def search_results(qry):
+    raw_qry = qry
+    qry = raw_qry.strip()
+    qry = "%{}%".format(qry)
+    if qry:
+        gift_results = db.session.query(Gifts).filter(
+            Gifts.name.ilike(qry)
+        ).limit(50).all()
+    else:
+        gift_results = []
+
+    return render_template('results.html', qry=raw_qry, gift_results=gift_results)
+
+
 ######################################################################
 #                       base functionality
 ######################################################################
@@ -76,7 +103,6 @@ def splash():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-
     if current_user.is_authenticated:
         return redirect(url_for('splash'))
 
@@ -87,21 +113,19 @@ def login():
         next_path = trylogin(form)
 
         if next_path:
-            return  redirect(url_for(next_path))
+            return redirect(url_for(next_path))
 
     return render_template('login.html', title='Log In', form=form)
 
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
-
     if current_user.is_authenticated:
         return redirect(url_for('splash'))
 
     form = RegistrationForm()
 
     if form.validate_on_submit():
-
         hashed_pass = bcrypt.generate_password_hash(password=form.password.data).decode('utf-8')
         user = User(username=form.username.data, password=hashed_pass, email=form.email.data)
 
@@ -129,11 +153,9 @@ def logout():
 @app.route('/user/<username>/gifts/add', methods=['GET', 'POST'])
 @login_required
 def gifts_add(username):
-
     form = CreateGiftForm()
 
     if form.validate_on_submit():
-
         _gifts_add(form)
 
         return redirect(url_for('gifts_add', username=current_user.username))
@@ -149,7 +171,6 @@ def gifts_add(username):
 @app.route('/user/<username>', methods=['GET', 'POST', 'DELETE'])
 @login_required
 def profile(username):
-
     page_user = db.session.query(User).filter_by(username=username).first()
 
     if not page_user:  # username is not an active username
