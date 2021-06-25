@@ -1,7 +1,7 @@
 # base packages
 
 # PyPi packages
-from flask import render_template, redirect, url_for, flash, request
+from flask import render_template, redirect, url_for, flash, request, g
 from flask_login import current_user, login_user, logout_user, login_required
 from sqlalchemy.exc import NoResultFound
 
@@ -13,6 +13,10 @@ from custom_exceptions import IncorrectPassword
 # Global Variables
 WEBSITE_NAME = "Gift Gopher"
 
+
+######################################################################
+#                       helper functions
+######################################################################
 
 def trylogin(form: LoginForm) -> str:
     """
@@ -58,6 +62,9 @@ def _gifts_add(form: CreateGiftForm):
     db.session.add(gift)
     db.session.commit()
 
+######################################################################
+#                       base functionality
+######################################################################
 
 @app.route('/')
 def splash():
@@ -114,6 +121,11 @@ def logout():
     return redirect(url_for('splash'))
 
 
+######################################################################
+#                       gifts
+######################################################################
+
+
 @app.route('/user/<username>/gifts/add', methods=['GET', 'POST'])
 @login_required
 def gifts_add(username):
@@ -127,6 +139,11 @@ def gifts_add(username):
         return redirect(url_for('gifts_add', username=current_user.username))
 
     return render_template('gifts_add.html', title='Add Gift', form=form)
+
+
+######################################################################
+#                       profile
+######################################################################
 
 
 @app.route('/user/<username>', methods=['GET', 'POST', 'DELETE'])
