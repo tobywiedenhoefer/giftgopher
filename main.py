@@ -4,10 +4,11 @@
 from flask import render_template, redirect, url_for, flash, request, g
 from flask_login import current_user, login_user, logout_user, login_required
 from sqlalchemy.exc import NoResultFound
+from sqlalchemy import and_
 
 # custom packages
 from models import User, Gifts, app, db, bcrypt, login_manager
-from forms import RegistrationForm, LoginForm, CreateGiftForm
+from forms import RegistrationForm, LoginForm, CreateGiftForm, SearchForm
 from custom_exceptions import IncorrectPassword
 
 # Global Variables
@@ -74,6 +75,7 @@ def search():
         return redirect(url_for('splash'))
     return redirect(url_for('search_results', qry=g.search_form.search.data))
 
+
 @app.route('/search/<qry>', methods=['POST', 'GET'])
 def search_results(qry):
     raw_qry = qry
@@ -81,12 +83,19 @@ def search_results(qry):
     qry = "%{}%".format(qry)
     if qry:
         gift_results = db.session.query(Gifts).filter(
-            Gifts.name.ilike(qry)
-        ).limit(50).all()
+            and_(Gifts.name.ilike(qry), Gifts.public == True)
+        ).join(User).all()
     else:
         gift_results = []
 
     return render_template('results.html', qry=raw_qry, gift_results=gift_results)
+
+
+@app.before_request
+def before_request():
+    # store search form in Flask's global 'g' variable
+    # makes available to all templates
+    g.search_form = SearchForm()
 
 
 ######################################################################

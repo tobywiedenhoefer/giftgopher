@@ -1,10 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'layout.html' %}
+{% block bodycontent %}
 
-</body>
-</html>
+<h1>Search results for "{{ qry }}":</h1>
+
+{% if gift_results %}
+    {% for result in gift_results %}
+        {{result.name}}
+        {{result.user_id}}
+    {% endfor %}
+{% endif %}
+{% endblock %}

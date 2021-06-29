@@ -25,16 +25,6 @@
             {% if current_user.is_authenticated %}
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto">
-                    <!-- Add Gifts or Holidays -->
-                    <li class="nav-item dropdown dropdown-menu-right">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Add
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="{{url_for('gifts_add', username=current_user.username)}}">Gifts</a></li>
-                            <li><a class="dropdown-item" href="#">Holidays</a></li>
-                        </ul>
-                    </li>
                     <!-- Profile or Log Out -->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -47,9 +37,24 @@
                     </li>
                 </ul>
             </div>
-            <form class="d-flex">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-            </form>
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+                    Dropdown
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenu2">
+                    <div class="container">
+                        <form class="d-flex" action="{{url_for('search')}}" method="POST" name="search">
+                            <div>
+                                {{g.search_form.hidden_tag()}}
+                                {{g.search_form.search(class="form-control mr-sm-2", placeholder="Search", type="search")}}
+                            </div>
+                            <button class="btn btn-secondary my-2 my-sm-0" type="submit">Go!</button>
+                        </form>
+                    </div>
+                    <li><a class="dropdown-item" href="{{url_for('gifts_add', username=current_user.username)}}">Add Gifts</a></li>
+                    <li><a class="dropdown-item" href="#">Add Holidays</a></li>
+                </ul>
+            </div>
 
             <!-- if user is not -->
             {% else %}
