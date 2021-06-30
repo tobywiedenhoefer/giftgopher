@@ -27,20 +27,6 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 
 
-class User(db.Model, UserMixin):
-    __tablename__ = "user"
-
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(15), unique=True, nullable=False)
-    email = db.Column(db.String(120), unique=True, nullable=False)
-    password = db.Column(db.String(60), nullable=False)
-
-    gifts = db.relationship('Gifts', backref='user')
-
-    def __repr__(self):
-        return f'{self.username} ({self.email})'
-
-
 class Gifts(db.Model):
     __tablename__ = "gifts"
 
@@ -84,6 +70,20 @@ class Holidays(db.Model):
     gift_id = db.Column(db.Integer, db.ForeignKey('gifts.gift_id'), nullable=False)
     holiday = db.Column(db.String(50), nullable=False)
     date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+
+
+class User(db.Model, UserMixin):
+    __tablename__ = "user"
+
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(15), unique=True, nullable=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    password = db.Column(db.String(60), nullable=False)
+
+    gifts = db.relationship(Gifts, backref='user')
+
+    def __repr__(self):
+        return f'{self.username} ({self.email})'
 
 
 # db.drop_all()
